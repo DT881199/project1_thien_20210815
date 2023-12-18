@@ -17,18 +17,21 @@ public class QuickSort {
             if (array[j] <= pivot) {
                 i++;
 
-                // Swap array[i] and array[j]
+                // Visual Swap array[i] and array[j]
                 //***********************//
                 int temp = array[i];
                 array[i] = array[j];
                 array[j] = temp;
+                //***********************//
             }
         }
 
-        // Swap array[i+1] and array[high] (put the pivot in its correct position)
+        // Visual Swap array[i+1] and array[high] (put the pivot in its correct position)
+        //***********************//
         int temp = array[i + 1];
         array[i + 1] = array[high];
         array[high] = temp;
+        //***********************//
 
         return i + 1;
     }

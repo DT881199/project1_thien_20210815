@@ -1,8 +1,7 @@
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class QuickSortListener implements ActionListener{
+public class SelectiveSortListener implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
