@@ -1,4 +1,9 @@
 import javax.swing.*;
+
+import Listeners.BubbleSortListener;
+import Listeners.MergeSortListener;
+import Listeners.QuickSortListener;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,127 +11,69 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class MovableBoxArray extends JFrame {
+public class MovableBoxArray extends JPanel {
 
-    private List<MovableBox> boxes;
-    private JButton moveButton;
+    private List<Box> boxes;
+    private JButton QuickSortButton;
+    private JButton MergeSortButton;
+    private JButton BubbleSortButton;
 
     public MovableBoxArray() {
-        boxes = new ArrayList<>();
-        boxes.add(new MovableBox(50, 50, 50, 50, 1));
-        boxes.add(new MovableBox(150, 50, 50, 50, 2));
-        boxes.add(new MovableBox(250, 50, 50, 50, 3));
+        boxes = new ArrayList<Box>();
+        boxes.add(new Box(50, 50, 50, 50, 1,1));
+        boxes.add(new Box(150, 50, 50, 50, 2,1));
+        boxes.add(new Box(250, 50, 50, 50, 3,1));
 
-        moveButton = new JButton("Move Box");
-        moveButton.setBackground(getForeground());
-        moveButton.addActionListener(new ActionListener() {
+        QuickSortButton = new JButton("Quick Sort");
+        MergeSortButton = new JButton("Merge Sort");
+        BubbleSortButton = new JButton("Bubble Sort");
+
+        QuickSortButton.setBackground(getForeground());
+        MergeSortButton.setBackground(getForeground());
+        BubbleSortButton.setBackground(getForeground());
+
+        QuickSortButton.addActionListener(new QuickSortListener());
+        MergeSortButton.addActionListener(new MergeSortListener());
+        BubbleSortButton.addActionListener(new BubbleSortListener());
+
+        add(QuickSortButton);
+        add(MergeSortButton);
+        add(BubbleSortButton);
+
+        repaint();
         
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                moveSelectedBox();
-            }
-        });
-        setLayout(new FlowLayout());
-        moveButton.setSize(new Dimension(10,100));
-        getContentPane().add(moveButton);
-        getContentPane().addMouseListener(new MouseAdapter() {
-            private MovableBox selectedBox;
-
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                for (MovableBox box : boxes) {
-                    if (box.contains(e.getPoint())) {
-                        selectedBox = box;
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                selectedBox = null;
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                if (selectedBox != null) {
-                    selectedBox.setX(e.getX() - selectedBox.getWidth() / 2);
-                    selectedBox.setY(e.getY() - selectedBox.getHeight() / 2);
-                    repaint();
-                }
-            }
-        });
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 200);
-        setVisible(true);
     }
-    private void moveSelectedBox() {
-        // Move the first box to a new location (you can customize this logic)
-        if (!boxes.isEmpty()) {
-            MovableBox firstBox = boxes.get(0);
-            firstBox.setX(firstBox.getX() + 10); // Move 10 pixels to the right
-            repaint();
+
+    public void setVariables(int boxNumber, int first, int last){
+        if (boxNumber <= 0 || first > last) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+
+        int[] randomArray = new int[boxNumber];
+        Random random = new Random();
+
+        for (int i = 0; i < boxNumber; i++) {
+            randomArray[i] = random.nextInt(last - first + 1) + first;
+        }
+        int rank = 0;
+        for(int value : randomArray){
+            boxes.add(new Box(10+rank, 50, 20, 50, 1,1));
+            rank += 55;
         }
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        for (MovableBox box : boxes) {
-            box.draw(g);
-        }
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        doPaint(g);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(MovableBoxArray::new);
-    }
-
-    private static class MovableBox {
-        private int x, y, width, height, value;
-
-        public MovableBox(int x, int y, int width, int height, int value) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.value = value;
-        }
-
-        public boolean contains(Point point) {
-            return new Rectangle(x, y, width, height).contains(point);
-        }
-
-        public void draw(Graphics g) {
-            g.setColor(Color.BLUE);
-            g.fillRect(x, y, width, height);
-            g.setColor(Color.BLACK);
-            g.drawString(String.valueOf(value), x + width / 2 - 5, y + height / 2 + 5);
-        }
-
-        public void setX(int x) {
-            this.x = x;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-        }
-
-        public int getWidth() {
-            return width;
-        }
-
-        public int getHeight() {
-            return height;
-        }
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
+    public void doPaint(Graphics g){
+        for(Box b : this.boxes){
+            g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
         }
     }
 }
