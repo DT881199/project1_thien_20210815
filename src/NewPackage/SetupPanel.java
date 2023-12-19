@@ -1,6 +1,11 @@
+package NewPackage;
+
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
-import java.awt.*;
+
+import Listeners.OptionListener;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,13 +23,13 @@ public class SetupPanel extends JPanel{
         formatter.setValueClass(Integer.class);
         formatter.setMinimum(0);
         formatter.setMaximum(Integer.MAX_VALUE);
-        formatter.setAllowsInvalid(false);
-        firstField  = new JFormattedTextField(formatter);  firstField.setColumns(10);
-        lastField   = new JFormattedTextField(formatter);  lastField.setColumns(10);
-        numberField = new JFormattedTextField(formatter);  numberField.setColumns(10);
+        formatter.setAllowsInvalid(true);
+        formatter.setOverwriteMode(true);
+        firstField  = new JFormattedTextField(formatter); firstField.setCaretPosition(0);
+        lastField   = new JFormattedTextField(formatter);
+        numberField = new JFormattedTextField(formatter); 
 
         submitButton = new JButton("Submit");
-        
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -33,29 +38,37 @@ public class SetupPanel extends JPanel{
 
             private void handleInput() {
                 try {
-                    // Get the input from the formatted text field
+                    // Get input
                     int first = (int) firstField.getValue();
                     int last = (int) lastField.getValue();
                     int number = (int) numberField.getValue();
+                    mainPanel.setArray(number, first, last);
+                    firstField.setText("");
+                    lastField.setText(""); 
+                    numberField.setText("");
         
-                } catch (NumberFormatException ex) {
-                    // Handle the case where the input is not a valid integer
-                    JOptionPane.showMessageDialog(new Panel(), "Invalid input. Please enter a valid integer.", "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception ex) {
+                    // Handle 
+                    JOptionPane.showMessageDialog(mainPanel, "Invalid input.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
  
-    String[] options = {"Quick Sort", "Merge sort", "Bubble Sort"};
+    String[] options = {"Quick Sort", "Merge sort", "Bubble Sort", "Selective Sort"};
     optionsBox = new JComboBox<>(options);
     optionsBox.addActionListener(new OptionListener(mainPanel));
 
-    setLayout(new FlowLayout());
-    add(optionsBox);
+    setLayout(new GridLayout(3, 3)); // 3 rows, 3 columns
+
+    add(new JLabel("First number:"));
     add(firstField);
+    add(optionsBox);
+
+    add(new JLabel("Last number:"));
     add(lastField);
-    add(numberField);
-
-
     add(submitButton);
+    
+    add(new JLabel("Amount:"));
+    add(numberField);
     }
 }

@@ -1,4 +1,5 @@
-import javax.swing.*;
+package NewPackage;
+
 import java.awt.*;
 
 public class Box {
@@ -7,33 +8,39 @@ public class Box {
     private int width;
     private int height;
     private int value;
-    private static int speed;
+    private int speed;
+    private int position;
 
     public static void move2Up_Down(Box a, Box b){
-        a.setY(a.getY() + Box.speed);
+        a.setY(a.getY() - a.speed);
 
-        b.setY(b.getY() - Box.speed);
+        b.setY(b.getY() + b.speed);
     }
 
-    public static void move2Left_Right(Box a, Box b){
-        a.setX(a.getX() + Box.speed);
-        b.setX(b.getX() - Box.speed);
+    public static void move2Right_Left(Box a, Box b){
+        a.setX(a.getX() + a.speed);
+        b.setX(b.getX() - b.speed);
 
     }
 
     public static void move1Left(Box a){
-        a.setX(a.getX() - Box.speed);
+        a.setX(a.getX() - a.speed);
     }
 
     public static void move1Right(Box a){
-        a.setX(a.getX() + Box.speed);
+        a.setX(a.getX() + a.speed);
     }
 
-    public static void move1Up(Box a, Box b){
-        a.setX(a.getX() + Box.speed);
+    public static void move1Up(Box a){
+        a.setX(a.getY() - a.speed);
     }
 
-    public Box(int x, int y, int width, int height, int value, int speed) {
+    public static void move1Down(Box a){
+        a.setX(a.getY() + a.speed);
+    }
+
+    public Box(int position, int x, int y, int width, int height, int value, int speed) {
+        this.position = position;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -70,6 +77,10 @@ public class Box {
 
     public int getY() {
         return y;
+    }
+
+    public int getValue() {
+        return value;
     }
 
 }

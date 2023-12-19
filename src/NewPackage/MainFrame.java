@@ -1,8 +1,8 @@
+package NewPackage;
+
 import java.awt.BorderLayout;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.text.NumberFormatter;
 
 public class MainFrame extends JFrame {
 
