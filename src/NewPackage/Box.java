@@ -1,6 +1,9 @@
 package NewPackage;
 
 import java.awt.*;
+import java.util.List;
+
+import MovingListener.Start_Swap_Listener;
 
 public class Box {
     private int x;
@@ -9,7 +12,18 @@ public class Box {
     private int height;
     private int value;
     private int speed;
-    private int position;
+
+    public static void SwapBox(int position1, int position2, MainPanel mainPanel) {
+        if(position1 == position2) return;
+
+        List<Box> boxes = mainPanel.getBoxes();
+        Box box1 = boxes.get(position1);
+        Box box2 = boxes.get(position2);
+        boxes.set(position1, box2);
+        boxes.set(position2, box1);
+
+        mainPanel.getTimer().addActionListener(new Start_Swap_Listener(mainPanel.getTimer(), box1, box2));
+    }
 
     public static void move2Up_Down(Box a, Box b){
         a.setY(a.getY() - a.speed);
@@ -39,8 +53,8 @@ public class Box {
         a.setX(a.getY() + a.speed);
     }
 
-    public Box(int position, int x, int y, int width, int height, int value, int speed) {
-        this.position = position;
+    public Box(int x, int y, int width, int height, int value, int speed) {
+
         this.x = x;
         this.y = y;
         this.width = width;
@@ -50,10 +64,18 @@ public class Box {
     }
 
     public void draw(Graphics g) {
-        g.setColor(Color.BLUE);
-        g.fillRect(x, y, width, height);
         g.setColor(Color.GREEN);
-        g.drawString(String.valueOf(value), x + width / 2 - 5, y + height / 2 + 5);
+        g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+
+        g.setColor(Color.RED);
+        g.drawLine(this.getX(), this.getY(), this.getX() + this.getWidth(), this.getY());
+        g.drawLine(this.getX(), this.getY(), this.getX(), this.getY() + this.getHeight());
+        g.drawLine(this.getX() + this.getWidth(), this.getY() , this.getX() + this.getWidth(), this.getY() + this.getHeight());
+        g.drawLine(this.getX(), this.getY() + this.getHeight(), this.getX() + this.getWidth(), this.getY() + this.getHeight());
+
+        Font font = new Font("Arial", Font.BOLD, 20);
+        g.setFont(font);g.setColor(Color.BLACK);
+        g.drawString(Integer.toString(this.getValue()), this.getX()+17, this.getY()+40);
     }
 
     public void setX(int x) {

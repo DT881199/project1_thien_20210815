@@ -1,9 +1,15 @@
-package Listeners;
+package OptionListener;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.JComboBox;
+import javax.swing.Timer;
 
+import Interfaces.ICustomListener;
+import Listeners.BubbleSortListener;
+import Listeners.MergeSortListener;
+import Listeners.QuickSortListener;
+import Listeners.SelectiveSortListener;
 import NewPackage.MainPanel;
 
 public class OptionListener implements ICustomListener{
@@ -11,30 +17,35 @@ public class OptionListener implements ICustomListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         String selectedOption = (String) ((JComboBox<?>)e.getSource()).getSelectedItem();
+
+        this.mainPanel.setRunning(false);
+
         if(selectedOption == "Quick Sort"){
-            mainPanel.setListenner(new QuickSortListener());
+            System.out.println("here");
+            this.mainPanel.setSortButton(new QuickSortListener(mainPanel));
         }
         else if(selectedOption == "Merge Sort"){
-            mainPanel.setListenner(new MergeSortListener());
+            this.mainPanel.setSortButton(new MergeSortListener(mainPanel));
         }
         else if(selectedOption == "Bubble Sort"){
-            mainPanel.setListenner(new BubbleSortListener());
+            this.mainPanel.setSortButton(new BubbleSortListener(mainPanel));
         }
         else{
-            mainPanel.setListenner(new SelectiveSortListener());
+            this.mainPanel.setSortButton(new SelectiveSortListener(mainPanel));
         }
+        
+        System.out.println("here2");
+        this.mainPanel.repaint();
     }
-
 
     public OptionListener(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
 
-
     @Override
     public void setMainPanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
-    
 }

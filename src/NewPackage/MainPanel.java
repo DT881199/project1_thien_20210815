@@ -1,28 +1,44 @@
 package NewPackage;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
-import Listeners.ICustomListener;
+import Interfaces.ICustomListener;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MainPanel extends JPanel {
+public class MainPanel extends JPanel implements ActionListener{
 
     private List<Box> boxes;
     private JButton SortButton;
     private int[] randomArray;
     private Graphics g;
+    private Timer timer;
+    private SwingWorker<Void, Integer> worker;
+    private Boolean running;
+    private MainFrame mainFrame;
+
 
     //Constructor
-    public MainPanel() {
-        boxes = new ArrayList<Box>();
-        SortButton = new JButton("Sort");
-        SortButton.setBackground(getForeground());
-        add(SortButton);
+    public MainPanel(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+        this.setLayout(new FlowLayout());
+        this.boxes = new ArrayList<Box>();
+        this.timer = new Timer(100,this);
+        this.running = false;
     }
+
+    //Timer se repaint
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.repaint();
+    } 
 
     //Set array
     public void setArray(int boxNumber, int first, int last){
@@ -36,24 +52,53 @@ public class MainPanel extends JPanel {
         for (int i = 0; i < boxNumber; i++) {
             randomArray[i] = random.nextInt(last - first + 1) + first;
         }
-        int rank = 0;
-        int position = 0;
+
+        this.boxes.clear();
+
+        int rank = 50;
         for(int value : randomArray){
-            (this.boxes).add(new Box(position, 10+rank, 500, 50, 100, value,1));
-            rank += 100;
-            position++;
+            (this.boxes).add(new Box(rank, 200, 50, 100, value,20));
+            rank += 80;
         }
+
+        this.repaint();
     }
 
-    //Set Listenner
-    public void setListenner(ICustomListener a){
-        a.setMainPanel(this);
-        this.SortButton.addActionListener(a);
+
+//*******************************Setter & Getter*******************************//
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
+
+    public void setWorker(SwingWorker<Void, Integer> worker) {
+        this.worker = worker;
+    }
+
+    public void setRunning(Boolean running) {
+        this.running = running;
+    }
+
+    public void setSortButton(ICustomListener customListener) {
+        if(this.SortButton != null){
+            this.remove(this.SortButton);
+        }
+
+        this.SortButton = new JButton("Sort");
+        this.SortButton.setBackground(Color.BLUE);
+        this.SortButton.addActionListener(customListener);
+        System.out.println("here3");
+        this.add(this.SortButton);
+        this.SortButton.revalidate();
+        this.repaint();
     }
 
     //Getters
     public int[] getRandomArray() {
         return randomArray;
+    }
+        
+    public SwingWorker<Void, Integer> getWorker() {
+        return worker;
     }
 
     public Graphics getG() {
@@ -64,21 +109,29 @@ public class MainPanel extends JPanel {
         return boxes;
     }
 
+    public Boolean getRunning() {
+        return running;
+    }
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public JButton getSortButton() {
+        return SortButton;
+    }
+    
+    public MainFrame getMainFrame() {
+        return mainFrame;
+    }
+//*****************************************************************************//
+
     //Paint
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        doPaint(g);
-        this.g = g;
-    }
-
-    public void doPaint(Graphics g){
         for(Box b : this.boxes){
-            g.setColor(Color.GREEN);
-            g.fillRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());
-            g.setColor(Color.RED);
-            g.drawString(Integer.toString(b.getValue()), b.getX()+10, b.getY()+10);
+            b.draw(g);
         }
     }
-    
 }
