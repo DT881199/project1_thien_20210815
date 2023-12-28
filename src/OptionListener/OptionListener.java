@@ -3,10 +3,10 @@ package OptionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JComboBox;
-import javax.swing.Timer;
 
 import Interfaces.ICustomListener;
 import Listeners.BubbleSortListener;
+import Listeners.InsertionSortListener;
 import Listeners.MergeSortListener;
 import Listeners.QuickSortListener;
 import Listeners.SelectiveSortListener;
@@ -27,12 +27,19 @@ public class OptionListener implements ICustomListener{
             this.mainPanel.setSortButton(new QuickSortListener(mainPanel));
         }
         else if(selectedOption == "Merge Sort"){
+            System.out.println("here");
             this.mainPanel.setSortButton(new MergeSortListener(mainPanel));
         }
         else if(selectedOption == "Bubble Sort"){
+            System.out.println("here");
             this.mainPanel.setSortButton(new BubbleSortListener(mainPanel));
         }
+        else if(selectedOption == "Insertion Sort"){
+            System.out.println("here");
+            this.mainPanel.setSortButton(new InsertionSortListener(mainPanel));
+        }
         else{
+            System.out.println("here");
             this.mainPanel.setSortButton(new SelectiveSortListener(mainPanel));
         }
         

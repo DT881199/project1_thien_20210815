@@ -3,15 +3,45 @@ package NewPackage;
 import java.awt.*;
 import java.util.List;
 
-import MovingListener.Start_Swap_Listener;
+import MovingListener.Insert_Listener;
+import MovingListener.Merge_Listener;
+import MovingListener.Swap_Listener;
 
 public class Box {
     private int x;
+    private static int distance;
     private int y;
     private int width;
     private int height;
-    private int value;
-    private int speed;
+    private String value;
+    private Color color;
+
+
+    public Box(int x, int y, int width, int height, int value, Color color) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.value = Integer.toString(value);
+        this.color = color;
+    }
+
+    public static void MergeBoxes(int left, int right, int middle, MainPanel mainPanel) {
+        mainPanel.getTimer().addActionListener(new Merge_Listener(mainPanel.getTimer(), mainPanel.getBoxes(), left, right, middle));
+    }
+
+    //Insert box tu fromPos den toPos, cac Box o giua thi dich 1 ve ben phai
+    public static void InsertBox(int fromPos, int toPos, MainPanel mainPanel) {
+        if(fromPos == toPos) return;
+
+        List<Box> boxes = mainPanel.getBoxes();
+        Box insertingBox = boxes.get(fromPos);      
+        for(int i = fromPos; i > toPos; i--){
+            boxes.set(i, boxes.get(i-1));
+        }
+        boxes.set(toPos, insertingBox);
+        mainPanel.getTimer().addActionListener(new Insert_Listener(mainPanel.getTimer(), boxes, fromPos, toPos));
+    }
 
     public static void SwapBox(int position1, int position2, MainPanel mainPanel) {
         if(position1 == position2) return;
@@ -22,49 +52,38 @@ public class Box {
         boxes.set(position1, box2);
         boxes.set(position2, box1);
 
-        mainPanel.getTimer().addActionListener(new Start_Swap_Listener(mainPanel.getTimer(), box1, box2));
+        mainPanel.getTimer().addActionListener(new Swap_Listener(mainPanel.getTimer(), box1, box2));
     }
 
-    public static void move2Up_Down(Box a, Box b){
-        a.setY(a.getY() - a.speed);
-
-        b.setY(b.getY() + b.speed);
+    public static void move2Up_Down(Box a, Box b, int speed){
+        a.setY(a.getY() - speed);
+        b.setY(b.getY() + speed);
     }
 
-    public static void move2Right_Left(Box a, Box b){
-        a.setX(a.getX() + a.speed);
-        b.setX(b.getX() - b.speed);
+    public static void move2Right_Left(Box a, Box b, int speed){
+        a.setX(a.getX() + speed);
+        b.setX(b.getX() - speed);
 
     }
 
-    public static void move1Left(Box a){
-        a.setX(a.getX() - a.speed);
+    public static void move1Left(Box a, int speed){
+        a.setX(a.getX() - speed);
     }
 
-    public static void move1Right(Box a){
-        a.setX(a.getX() + a.speed);
+    public static void move1Right(Box a, int speed){
+        a.setX(a.getX() + speed);
     }
 
-    public static void move1Up(Box a){
-        a.setX(a.getY() - a.speed);
+    public static void move1Up(Box a, int speed){
+        a.setY(a.getY() - speed);
     }
 
-    public static void move1Down(Box a){
-        a.setX(a.getY() + a.speed);
-    }
-
-    public Box(int x, int y, int width, int height, int value, int speed) {
-
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.value = value;
-        this.speed = speed;
+    public static void move1Down(Box a, int speed){
+        a.setY(a.getY() + speed);
     }
 
     public void draw(Graphics g) {
-        g.setColor(Color.GREEN);
+        g.setColor(this.color);
         g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 
         g.setColor(Color.RED);
@@ -75,7 +94,7 @@ public class Box {
 
         Font font = new Font("Arial", Font.BOLD, 20);
         g.setFont(font);g.setColor(Color.BLACK);
-        g.drawString(Integer.toString(this.getValue()), this.getX()+17, this.getY()+40);
+        g.drawString(this.getValue(), this.getX()+17, this.getY()+40);
     }
 
     public void setX(int x) {
@@ -84,6 +103,14 @@ public class Box {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+    
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public int getWidth() {
@@ -101,8 +128,17 @@ public class Box {
         return y;
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
+    }
+
+    
+    public static void setDistance(int distance) {
+        Box.distance = distance;
+    }
+
+    public static int getDistance() {
+        return Box.distance;
     }
 
 }

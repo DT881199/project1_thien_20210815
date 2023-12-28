@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 
 import Interfaces.ICustomListener;
 
@@ -30,7 +28,7 @@ public class MainPanel extends JPanel implements ActionListener{
         this.mainFrame = mainFrame;
         this.setLayout(new FlowLayout());
         this.boxes = new ArrayList<Box>();
-        this.timer = new Timer(100,this);
+        this.timer = new Timer(50,this);
         this.running = false;
     }
 
@@ -45,25 +43,23 @@ public class MainPanel extends JPanel implements ActionListener{
         if (boxNumber <= 0 || first > last) {
             throw new IllegalArgumentException("Invalid arguments");
         }   
-
         randomArray = new int[boxNumber];
         Random random = new Random();
-
         for (int i = 0; i < boxNumber; i++) {
             randomArray[i] = random.nextInt(last - first + 1) + first;
         }
 
         this.boxes.clear();
-
-        int rank = 50;
+        
+        int distance = 500/boxNumber;
+        Box.setDistance(distance);
+        int x = 40;
         for(int value : randomArray){
-            (this.boxes).add(new Box(rank, 200, 50, 100, value,20));
-            rank += 80;
+            (this.boxes).add(new Box(x, 200, 2*distance, 3*distance, value, Color.GREEN));
+            x += 3*distance;
         }
-
         this.repaint();
     }
-
 
 //*******************************Setter & Getter*******************************//
     public void setTimer(Timer timer) {

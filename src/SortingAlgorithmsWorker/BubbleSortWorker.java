@@ -30,7 +30,7 @@ public class BubbleSortWorker extends SwingWorker<Void, Integer>{
         //Enable setupPanel:
         this.mainPanel.getMainFrame()
         .setEnabledPanel(this.mainPanel.getMainFrame().getSetupPanel(), true);
-
+        this.mainPanel.setRunning(false);
     }
 
     private void bubbleSort(int[] array, MainPanel mainPanel) throws InterruptedException {
@@ -46,7 +46,7 @@ public class BubbleSortWorker extends SwingWorker<Void, Integer>{
                     array[j + 1] = temp;
                     System.out.println("Swapped");
                     Box.SwapBox(j, j+1, mainPanel);
-                    Thread.sleep(100*10 + 100*80/20 + 100);  
+                    Thread.sleep(1500);  
                 //***********************//    
                 }
             }

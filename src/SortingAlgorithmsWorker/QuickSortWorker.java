@@ -1,11 +1,9 @@
 package SortingAlgorithmsWorker;
 
-import java.util.List;
+import java.awt.Color;
 
 import javax.swing.SwingWorker;
-import javax.swing.Timer;
 
-import MovingListener.Start_Swap_Listener;
 import NewPackage.Box;
 import NewPackage.MainPanel;
 
@@ -31,6 +29,7 @@ public class QuickSortWorker extends SwingWorker<Void, Integer>{
         //Enable setupPanel:
         this.mainPanel.getMainFrame()
         .setEnabledPanel(this.mainPanel.getMainFrame().getSetupPanel(), true);
+        this.mainPanel.setRunning(false);
 
     }
     
@@ -45,6 +44,13 @@ public class QuickSortWorker extends SwingWorker<Void, Integer>{
     }
     private int partition(int[] array, int low, int high, MainPanel mainPanel) throws InterruptedException{
         int pivot = array[high];
+
+        //Set color
+        this.mainPanel.getBoxes().get(high).setColor(Color.RED);
+        for(int k = low; k < high; k++){
+            this.mainPanel.getBoxes().get(k).setColor(Color.BLUE);
+        }
+
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
@@ -58,7 +64,12 @@ public class QuickSortWorker extends SwingWorker<Void, Integer>{
                 array[j] = temp;
                 System.out.println("Swapped");
                 Box.SwapBox(i,j,mainPanel);
-                Thread.sleep(100*10 + 100*(j-i)*80/20 + 100);  
+                if(i != j) {
+                    Thread.sleep(1500);
+                }
+                else{
+                    Thread.sleep(50);
+                } 
                 //***********************//
             }
         }
@@ -70,8 +81,19 @@ public class QuickSortWorker extends SwingWorker<Void, Integer>{
         array[high] = temp;
         
         Box.SwapBox(i+1,high,mainPanel);
-        Thread.sleep(100*10 + 100*(high-i-1)*80/20 + 100);  
+        if(i+1 != high) {
+            Thread.sleep(1500);
+        }
+        else{
+            Thread.sleep(500);
+        } 
         //***********************//
+        
+        //Set color
+        this.mainPanel.getBoxes().get(high).setColor(Color.GREEN);
+        for(int k = low; k < high; k++){
+            this.mainPanel.getBoxes().get(k).setColor(Color.GREEN);
+        }
 
         return i + 1;   
     }
