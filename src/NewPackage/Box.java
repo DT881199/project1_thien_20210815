@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 import MovingListener.Insert_Listener;
 import MovingListener.Merge_Listener;
 import MovingListener.Swap_Listener;
@@ -17,7 +19,7 @@ public class Box {
     private int y;
     private int width;
     private int height;
-    
+
     private String value;
     private Color color;
 
@@ -31,36 +33,52 @@ public class Box {
         this.color = color;
     }
 
+    //-------         * All changes on Box List, timer and UI must be made on EDT *          -------//
+
     public static void MergeBoxes(Box[] mergedBoxArray,int left, int right, MainPanel mainPanel) {
-        //Update the real Box list using the array
-        List<Box> boxList = new ArrayList<Box>(Arrays.asList(mergedBoxArray));
-        mainPanel.setBoxes(boxList);
-        mainPanel.getTimer().addActionListener(new Merge_Listener(mainPanel.getTimer(), mainPanel.getBoxes(), left, right));
+        
+        //All changes on Box List, timer and UI must be made on EDT
+        SwingUtilities.invokeLater(() -> {
+            //Update the real Box list using the array
+            List<Box> boxList = new ArrayList<Box>(Arrays.asList(mergedBoxArray));
+            mainPanel.setBoxes(boxList);
+
+            mainPanel.getTimer().addActionListener(new Merge_Listener(mainPanel.getTimer(), mainPanel.getBoxes(), left, right));
+        });
     }
 
-    //Insert box tu fromPos den toPos, cac Box o giua thi dich 1 ve ben phai
+    //Insert fromPos --> toPos, move those in middle
     public static void InsertBox(int fromPos, int toPos, MainPanel mainPanel) {
-        if(fromPos == toPos) return;
+        
+        //All changes on Box List, timer and UI must be made on EDT
+        SwingUtilities.invokeLater(() -> {
+            if(fromPos == toPos) return;
 
-        List<Box> boxes = mainPanel.getBoxes();
-        Box insertingBox = boxes.get(fromPos);      
-        for(int i = fromPos; i > toPos; i--){
-            boxes.set(i, boxes.get(i-1));
-        }
-        boxes.set(toPos, insertingBox);
-        mainPanel.getTimer().addActionListener(new Insert_Listener(mainPanel.getTimer(), boxes, fromPos, toPos));
+            List<Box> boxes = mainPanel.getBoxes();
+            Box insertingBox = boxes.get(fromPos);      
+            for(int i = fromPos; i > toPos; i--){
+                boxes.set(i, boxes.get(i-1));
+            }
+            boxes.set(toPos, insertingBox);
+            
+            mainPanel.getTimer().addActionListener(new Insert_Listener(mainPanel.getTimer(), boxes, fromPos, toPos));
+        });
     }
 
     public static void SwapBox(int position1, int position2, MainPanel mainPanel) {
-        if(position1 == position2) return;
 
-        List<Box> boxes = mainPanel.getBoxes();
-        Box box1 = boxes.get(position1);
-        Box box2 = boxes.get(position2);
-        boxes.set(position1, box2);
-        boxes.set(position2, box1);
+        //All changes on Box List, timer and UI must be made on EDT
+        SwingUtilities.invokeLater(() -> {
+            if(position1 == position2) return;
 
-        mainPanel.getTimer().addActionListener(new Swap_Listener(mainPanel.getTimer(), box1, box2));
+            List<Box> boxes = mainPanel.getBoxes();
+            Box box1 = boxes.get(position1);
+            Box box2 = boxes.get(position2);
+            boxes.set(position1, box2);
+            boxes.set(position2, box1);
+
+            mainPanel.getTimer().addActionListener(new Swap_Listener(mainPanel.getTimer(), box1, box2));
+        });
     }
 
     public static void move2Up_Down(Box a, Box b, int speed){

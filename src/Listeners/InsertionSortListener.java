@@ -1,21 +1,26 @@
 package Listeners;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import Interfaces.ICustomListener;
 import NewPackage.MainPanel;
 import SortingAlgorithmsWorker.InsertionSortWorker;
 
+    //Listening to SortButton
 public class InsertionSortListener implements ICustomListener{
     
     MainPanel mainPanel;
+
+    /*************Status right before action*************/
+    List<int[]> statusArrays;
+    List<int[]> actionArrays;
 
     public InsertionSortListener(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
 
     @Override
-    //Listening to SortButton
     public void actionPerformed(ActionEvent e) {
         if(!this.mainPanel.getRunning()){//Chay timer va worker
             

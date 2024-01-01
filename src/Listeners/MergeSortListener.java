@@ -1,21 +1,26 @@
 package Listeners;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import Interfaces.ICustomListener;
 import NewPackage.MainPanel;
 import SortingAlgorithmsWorker.MergeSortWorker;
 
+    //Listening to SortButton
 public class MergeSortListener implements ICustomListener{
     
     MainPanel mainPanel;
+
+    /*************Status right before action*************/
+    List<int[]> statusArrays;
+    List<int[]> actionArrays;
 
     public MergeSortListener(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
 
     @Override
-    //Listening to SortButton
     public void actionPerformed(ActionEvent e) {
         if(!this.mainPanel.getRunning()){//Chay timer va worker
             

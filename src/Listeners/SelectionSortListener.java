@@ -2,22 +2,27 @@ package Listeners;
 
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import Interfaces.ICustomListener;
 import NewPackage.MainPanel;
 import SortingAlgorithmsWorker.QuickSortWorker;
 import SortingAlgorithmsWorker.SelectionSortWorker;
 
+    //Listening to SortButton
 public class SelectionSortListener implements ICustomListener{
 
     MainPanel mainPanel;
-    
+
+    /*************Status right before action*************/
+    List<int[]> statusArrays;
+    List<int[]> actionArrays;
+
     public SelectionSortListener(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
 
     @Override
-    //Listening to SortButton
     public void actionPerformed(ActionEvent e) {
             
         //Disable setupPanel:

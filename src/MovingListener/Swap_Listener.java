@@ -31,23 +31,26 @@ public class Swap_Listener implements ActionListener{
         this.preX1 = box1.getX();
         this.preX2 = box2.getX();
 
-
         this.executionCount = 0;
         this.timer = timer;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         //Start swapping
         if(executionCount < 5){
             this.executionCount++;
             Box.move2Up_Down(box1, box2, 20);
         }
+
         //Dung lai o 6, chuyen sang Mid
         else if(this.executionCount > 5){
+
             //Finish swapping
             this.executionCount++;
             Box.move2Up_Down(box2, box1, 20);
+
             if(this.executionCount == 11) {
                 //End swapping
                 this.box1.setColor(this.preColor1);
@@ -55,6 +58,7 @@ public class Swap_Listener implements ActionListener{
                 this.timer.removeActionListener(this);
             }
         } 
+
         else{
             //Mid swapping
             double speed = (double)((preX2-preX1)/10);

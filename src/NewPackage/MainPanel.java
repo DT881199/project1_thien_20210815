@@ -13,13 +13,25 @@ import java.util.Random;
 
 public class MainPanel extends JPanel implements ActionListener{
 
-    private List<Box> boxes;
+    //List and array to trace back status.
+    private List<Box> originBoxes;
+    private int[] originArray;
+
+    //Buttons
     private JButton SortButton;
-    private int[] randomArray;
+    private JButton ForwardButton;
+    private JButton BackwardButton;
+
     private Graphics g;
+
+    //Working list and array
+    private int[] randomArray;
+    private List<Box> boxes;
+
     private Timer timer;
     private SwingWorker<Void, Integer> worker;
     private Boolean running;
+
     private MainFrame mainFrame;
 
 
@@ -43,10 +55,13 @@ public class MainPanel extends JPanel implements ActionListener{
         if (boxNumber <= 0 || first > last) {
             throw new IllegalArgumentException("Invalid arguments");
         }   
-        randomArray = new int[boxNumber];
+        this.randomArray = new int[boxNumber];
+        this.originArray = new int[boxNumber];
+
         Random random = new Random();
         for (int i = 0; i < boxNumber; i++) {
             randomArray[i] = random.nextInt(last - first + 1) + first;
+            originArray[i] = i;
         }
 
         this.boxes.clear();
@@ -58,6 +73,7 @@ public class MainPanel extends JPanel implements ActionListener{
             (this.boxes).add(new Box(x, 200, 2*distance, 3*distance, value, Color.GREEN));
             x += 3*distance;
         }
+        this.originBoxes = new ArrayList<Box>(this.boxes);
         this.repaint();
     }
 
@@ -82,13 +98,31 @@ public class MainPanel extends JPanel implements ActionListener{
         if(this.SortButton != null){
             this.remove(this.SortButton);
         }
+        if(this.BackwardButton != null){
+            this.remove(this.BackwardButton);
+        }
+        if(this.ForwardButton != null){
+            this.remove(this.ForwardButton);
+        }
 
-        this.SortButton = new JButton("Sort");
+        this.SortButton = new JButton("SORT | PAUSE");
         this.SortButton.setBackground(Color.BLUE);
+        this.SortButton.setForeground(Color.WHITE);
+
+        this.BackwardButton = new JButton("Backward");
+        this.ForwardButton  = new JButton("Forward");
+
         this.SortButton.addActionListener(customListener);
-        System.out.println("here3");
+        this.BackwardButton.addActionListener(customListener);
+        this.ForwardButton.addActionListener(customListener);
+
+        this.add(this.BackwardButton);
         this.add(this.SortButton);
+        this.add(this.ForwardButton);
+
         this.SortButton.revalidate();
+        this.BackwardButton.revalidate();
+        this.ForwardButton.revalidate();
         this.repaint();
     }
 
@@ -97,6 +131,14 @@ public class MainPanel extends JPanel implements ActionListener{
         return randomArray;
     }
         
+    public List<Box> getOriginBoxes() {
+        return originBoxes;
+    }
+
+    public int[] getOriginArray() {
+        return originArray;
+    }
+
     public SwingWorker<Void, Integer> getWorker() {
         return worker;
     }
@@ -121,6 +163,14 @@ public class MainPanel extends JPanel implements ActionListener{
         return SortButton;
     }
     
+    public JButton getForwardButton() {
+        return ForwardButton;
+    }
+
+    public JButton getBackwardButton() {
+        return BackwardButton;
+    }
+
     public MainFrame getMainFrame() {
         return mainFrame;
     }

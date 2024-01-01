@@ -1,55 +1,20 @@
 package Algorithms;
 
-import java.awt.Color;
+import java.util.List;
 
-import javax.swing.SwingWorker;
-
-import NewPackage.Box;
-import NewPackage.MainPanel;
-
-public class QuickSort extends SwingWorker<Void, Integer>{
-
-    MainPanel mainPanel;
-
-    public QuickSort(MainPanel mainPanel) {
-        this.mainPanel = mainPanel;
-    }
-
-    @Override
-    protected Void doInBackground()throws InterruptedException{
-        int[] array = this.mainPanel.getRandomArray();
-        this.quickSort(array, 0, array.length - 1, this.mainPanel);
-        
-        return null;
-    }
-
-    @Override
-    protected void done() {
-            
-        //Enable setupPanel:
-        this.mainPanel.getMainFrame()
-        .setEnabledPanel(this.mainPanel.getMainFrame().getSetupPanel(), true);
-        this.mainPanel.setRunning(false);
-
-    }
+public class QuickSort{
     
-    public void  quickSort(int[] array, int low, int high, MainPanel mainPanel) throws InterruptedException{
+    public static void quickSort(int[] array, int low, int high, List<int[]> actionArray, List<int[]> statusArrays){
         
         if (low < high) {
-            int partitionIndex = this.partition(array, low, high, mainPanel);
+            int partitionIndex = partition(array, low, high, actionArray, statusArrays);
 
-            this.quickSort(array, low, partitionIndex - 1, mainPanel);
-            this.quickSort(array, partitionIndex + 1, high, mainPanel);
+            quickSort(array, low, partitionIndex - 1, actionArray, statusArrays);
+            quickSort(array, partitionIndex + 1, high, actionArray, statusArrays);
         }
     }
-    private int partition(int[] array, int low, int high, MainPanel mainPanel) throws InterruptedException{
+    private static int partition(int[] array, int low, int high, List<int[]> actionArray, List<int[]> statusArrays){
         int pivot = array[high];
-
-        //Set color
-        this.mainPanel.getBoxes().get(high).setColor(Color.RED);
-        for(int k = low; k < high; k++){
-            this.mainPanel.getBoxes().get(k).setColor(Color.BLUE);
-        }
 
         int i = low - 1;
 
@@ -59,40 +24,39 @@ public class QuickSort extends SwingWorker<Void, Integer>{
 
                 // Visualize Swap array[i] and array[j]
                 //***********************//
-                int temp = array[i];
+                int temp1 = array[i];
                 array[i] = array[j];
-                array[j] = temp;
+                array[j] = temp1;
+
+                int[] status = statusArrays.get(statusArrays.size()-1);
+                int temp2 = status[i];
+                status[i] = status[j];
+                status[j] = temp2;
+                statusArrays.add(status);
+
                 System.out.println("Swapped");
-                Box.SwapBox(i,j,mainPanel);
-                if(i != j) {
-                    Thread.sleep(1500);
-                }
-                else{
-                    Thread.sleep(50);
-                } 
+
+                int[] tmp1 = {i, j};
+                actionArray.add(tmp1);
                 //***********************//
             }
         }
 
         // Visualize Swap array[i+1] and array[high] (put the pivot in its correct position)
         //***********************//
-        int temp = array[i + 1];
+        int temp1 = array[i + 1];
         array[i + 1] = array[high];
-        array[high] = temp;
+        array[high] = temp1;
+
+        int[] status = statusArrays.get(statusArrays.size()-1);
+        int temp2 = status[i+1];
+        status[i+1] = status[high];
+        status[high] = temp2;
+        statusArrays.add(status);
         
-        Box.SwapBox(i+1,high,mainPanel);
-        if(i+1 != high) {
-            Thread.sleep(1500);
-        }
-        else{
-            Thread.sleep(500);
-        } 
+        int[] tmp2 = {i+1, high};
+        actionArray.add(tmp2);
         //***********************//
-        
-        //Set color
-        for(int k = low; k <= high; k++){
-            this.mainPanel.getBoxes().get(k).setColor(Color.GREEN);
-        }
 
         return i + 1;   
     }
