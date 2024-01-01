@@ -3,6 +3,7 @@ package NewPackage;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -38,9 +39,16 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    public void setEnabledPanel(JPanel panel, boolean enabled) {
-        for (Component component : panel.getComponents()) {
-                component.setEnabled(enabled);
+        public void setEnabledPanel(Container container, boolean enabled) {
+            container.setEnabled(enabled);
+
+            Component[] components = container.getComponents();
+            for (Component component : components) {
+                if (component instanceof Container) {
+                    setEnabledPanel((Container) component, enabled);
+                } else {
+                    component.setEnabled(enabled);
+                }
             }
         }
 

@@ -1,6 +1,8 @@
 package NewPackage;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import MovingListener.Insert_Listener;
@@ -8,11 +10,14 @@ import MovingListener.Merge_Listener;
 import MovingListener.Swap_Listener;
 
 public class Box {
-    private int x;
+
     private static int distance;
+
+    private int x;
     private int y;
     private int width;
     private int height;
+    
     private String value;
     private Color color;
 
@@ -26,8 +31,11 @@ public class Box {
         this.color = color;
     }
 
-    public static void MergeBoxes(int left, int right, int middle, MainPanel mainPanel) {
-        mainPanel.getTimer().addActionListener(new Merge_Listener(mainPanel.getTimer(), mainPanel.getBoxes(), left, right, middle));
+    public static void MergeBoxes(Box[] mergedBoxArray,int left, int right, MainPanel mainPanel) {
+        //Update the real Box list using the array
+        List<Box> boxList = new ArrayList<Box>(Arrays.asList(mergedBoxArray));
+        mainPanel.setBoxes(boxList);
+        mainPanel.getTimer().addActionListener(new Merge_Listener(mainPanel.getTimer(), mainPanel.getBoxes(), left, right));
     }
 
     //Insert box tu fromPos den toPos, cac Box o giua thi dich 1 ve ben phai
@@ -126,6 +134,10 @@ public class Box {
 
     public int getY() {
         return y;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public String getValue() {

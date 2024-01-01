@@ -1,4 +1,4 @@
-package SortingAlgorithmsWorker;
+package Algorithms;
 
 import java.awt.Color;
 
@@ -7,11 +7,11 @@ import javax.swing.SwingWorker;
 import NewPackage.Box;
 import NewPackage.MainPanel;
 
-public class QuickSortWorker extends SwingWorker<Void, Integer>{
+public class QuickSort extends SwingWorker<Void, Integer>{
 
     MainPanel mainPanel;
 
-    public QuickSortWorker(MainPanel mainPanel) {
+    public QuickSort(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
 

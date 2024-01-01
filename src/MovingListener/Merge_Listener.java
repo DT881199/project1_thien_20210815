@@ -15,15 +15,19 @@ public class Merge_Listener implements ActionListener{
     List<Box> boxes;
     int left; 
     int right;
-    int middle;
+    int preX;
+    int position;
     int executionCount;
 
-    public Merge_Listener(Timer timer, List<Box> boxes, int left, int right, int middle){
+    public Merge_Listener(Timer timer, List<Box> boxes, int left, int right){
         this.left = left;
         this.right = right;
-        this.middle = middle;
-        this.boxes = boxes;
 
+        this.position = left;
+        this.preX = boxes.get(this.position).getX();
+
+        this.boxes = boxes;
+        
         this.executionCount = 0;
         this.timer = timer;
     }
@@ -31,36 +35,47 @@ public class Merge_Listener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         //Start merging
-        int n1 = middle - left + 1;
-        int n2 = right - middle;
 
-        Box[] leftArray = new Box[n1];
-        Box[] rightArray = new Box[n2];
-        Box[] boxArray = boxes.toArray(new Box[0]);
-        System.arraycopy(boxArray, left, leftArray, 0, n1);
-        System.arraycopy(boxArray, middle + 1, rightArray, 0, n2);
+        if(executionCount < 10){
+            this.executionCount++;
+            Box.move1Down(boxes.get(this.position), 20);
 
-        int i = 0, j = 0, k = left;
-        while (i < n1 && j < n2) {
-            if (Integer.parseInt(leftArray[i].getValue()) <= Integer.parseInt(rightArray[j].getValue())) {
-                boxArray[k] = leftArray[i];
-                
-                i++;
-            } else {
-                boxArray[k] = rightArray[j];
-                j++;
+            double speed = (double)((this.preX - 40 - Box.getDistance()*3*this.position)/10);
+            if(speed > 0) Box.move1Left(boxes.get(this.position), (int)Math.ceil(speed));
+            else if(speed < 0) Box.move1Left(boxes.get(this.position), (int)Math.floor(speed));
+            
+            if(
+                (speed > 0 && boxes.get(this.position).getX() - 40 <= Box.getDistance()*3*this.position)    
+                 ||
+                (speed < 0 && boxes.get(this.position).getX() - 40 >= Box.getDistance()*3*this.position)
+            ){
+                boxes.get(this.position).setX(Box.getDistance()*3*this.position + 40);
             }
-            k++;
+
+            if(this.executionCount == 10){
+                boxes.get(this.position).setX(Box.getDistance()*3*this.position + 40);
+                this.position++;
+  
+                if(this.position > this.right){
+                    this.executionCount = 11;
+                }
+                else{
+                    this.executionCount = 0;
+                    this.preX = boxes.get(this.position).getX();
+                }
+            }
         }
-        while (i < n1) {
-            boxArray[k] = leftArray[i];
-            i++;
-            k++;
-        }
-        while (j < n2) {
-            boxArray[k] = rightArray[j];
-            j++;
-            k++;
-        }
+        else if(this.executionCount > 10){
+            //Finish merging
+            this.executionCount++;
+
+            for(int i = left; i <= right; i++){
+                Box.move1Up(boxes.get(i), 20);
+            }
+
+            if(this.executionCount == 21){
+                this.timer.removeActionListener(this);
+            }
+        } 
     }   
 }

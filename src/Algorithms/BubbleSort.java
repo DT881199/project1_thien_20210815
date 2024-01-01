@@ -1,16 +1,16 @@
-package SortingAlgorithmsWorker;
+package Algorithms;
 
 import javax.swing.SwingWorker;
 
 import NewPackage.Box;
 import NewPackage.MainPanel;
 
-public class BubbleSortWorker extends SwingWorker<Void, Integer>{
+public class BubbleSort extends SwingWorker<Void, Integer>{
 
     
     MainPanel mainPanel;
 
-    public BubbleSortWorker(MainPanel mainPanel) {
+    public BubbleSort(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
 

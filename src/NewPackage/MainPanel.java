@@ -74,6 +74,10 @@ public class MainPanel extends JPanel implements ActionListener{
         this.running = running;
     }
 
+    public void setBoxes(List<Box> boxes) {
+        this.boxes = boxes;
+    }
+
     public void setSortButton(ICustomListener customListener) {
         if(this.SortButton != null){
             this.remove(this.SortButton);

@@ -1,4 +1,4 @@
-package SortingAlgorithmsWorker;
+package Algorithms;
 import java.awt.Color;
 
 import javax.swing.SwingWorker;
@@ -6,12 +6,12 @@ import javax.swing.SwingWorker;
 import NewPackage.Box;
 import NewPackage.MainPanel;
 
-public class MergeSortWorker extends SwingWorker<Void, Integer> {
+public class MergeSort extends SwingWorker<Void, Integer> {
     
     MainPanel mainPanel;
     Box[] boxArray;
 
-    public MergeSortWorker(MainPanel mainPanel) {
+    public MergeSort(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
         this.boxArray = mainPanel.getBoxes().toArray(new Box[0]);
     }

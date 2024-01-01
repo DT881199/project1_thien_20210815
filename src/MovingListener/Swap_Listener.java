@@ -16,15 +16,21 @@ public class Swap_Listener implements ActionListener{
     Box box1;
     Box box2;
     int executionCount;
+    Color preColor1;
+    Color preColor2;
 
     public Swap_Listener(Timer timer,Box box1, Box box2) {
         this.box1 = box1;
         this.box2 = box2;
+
+        this.preColor1 = box1.getColor();
+        this.preColor2 = box2.getColor();
         this.box1.setColor(Color.ORANGE);
         this.box2.setColor(Color.ORANGE);
 
         this.preX1 = box1.getX();
         this.preX2 = box2.getX();
+
 
         this.executionCount = 0;
         this.timer = timer;
@@ -44,8 +50,8 @@ public class Swap_Listener implements ActionListener{
             Box.move2Up_Down(box2, box1, 20);
             if(this.executionCount == 11) {
                 //End swapping
-                this.box1.setColor(Color.BLUE);
-                this.box2.setColor(Color.BLUE);
+                this.box1.setColor(this.preColor1);
+                this.box2.setColor(this.preColor2);
                 this.timer.removeActionListener(this);
             }
         } 

@@ -9,7 +9,7 @@ import Listeners.BubbleSortListener;
 import Listeners.InsertionSortListener;
 import Listeners.MergeSortListener;
 import Listeners.QuickSortListener;
-import Listeners.SelectiveSortListener;
+import Listeners.SelectionSortListener;
 import NewPackage.MainPanel;
 
 public class OptionListener implements ICustomListener{
@@ -27,7 +27,7 @@ public class OptionListener implements ICustomListener{
             this.mainPanel.setSortButton(new QuickSortListener(mainPanel));
         }
         else if(selectedOption == "Merge Sort"){
-            System.out.println("here");
+            System.out.println("here4");
             this.mainPanel.setSortButton(new MergeSortListener(mainPanel));
         }
         else if(selectedOption == "Bubble Sort"){
@@ -40,7 +40,7 @@ public class OptionListener implements ICustomListener{
         }
         else{
             System.out.println("here");
-            this.mainPanel.setSortButton(new SelectiveSortListener(mainPanel));
+            this.mainPanel.setSortButton(new SelectionSortListener(mainPanel));
         }
         
         System.out.println("here2");

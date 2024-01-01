@@ -38,28 +38,25 @@ public class SetupPanel extends JPanel{
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
                     // Get input va tao array
                     int first = (int) firstField.getValue();
                     int last = (int) lastField.getValue();
                     int number = (int) numberField.getValue();
+
+                    System.out.println(number+" " + first + " " + last);
                     mainPanel.setArray(number, first, last);
-                    firstField.setText("");
-                    lastField.setText(""); 
-                    numberField.setText("");
 
                     // Set Timer trong mainPanel
                     mainPanel.setTimer(new Timer(50,mainPanel));
                     
-                } catch (Exception ex) {
-                    // Handle 
-                    JOptionPane.showMessageDialog(mainPanel, "Invalid input.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+
             }
         });
  
         //Option box
-        String[] options = {"Choose your sorting algorithms", "Quick Sort", "Merge Sort", "Bubble Sort", "Insertion Sort", "Selective Sort"};
+        String[] options = {"Choose your sorting algorithms"
+                          , "Quick Sort", "Merge Sort", "Bubble Sort"
+                          , "Insertion Sort", "Selection Sort"};
         optionsBox = new JComboBox<>(options);
         optionsBox.setFont(font);
         optionsBox.addActionListener(new OptionListener(mainPanel));
