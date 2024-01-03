@@ -1,50 +1,39 @@
 package Algorithms;
 
-import javax.swing.SwingWorker;
+import java.util.List;
 
-import NewPackage.Box;
 import NewPackage.MainPanel;
 
-public class BubbleSort extends SwingWorker<Void, Integer>{
+public class BubbleSort{
 
-    
-    MainPanel mainPanel;
-
-    public BubbleSort(MainPanel mainPanel) {
-        this.mainPanel = mainPanel;
-    }
-
-    @Override
-    protected Void doInBackground()throws InterruptedException{
-        int[] array = this.mainPanel.getRandomArray();
-        this.bubbleSort(array, this.mainPanel);
-        
-        return null;
-    }
-
-    @Override
-    protected void done() {
-            
-        //Enable setupPanel:
-        this.mainPanel.getMainFrame()
-        .setEnabledPanel(this.mainPanel.getMainFrame().getSetupPanel(), true);
-        this.mainPanel.setRunning(false);
-    }
-
-    private void bubbleSort(int[] array, MainPanel mainPanel) throws InterruptedException {
+    public static void bubbleSort(int[] array, MainPanel mainPanel, List<int[]> actionArray, List<int[]> statusArrays) {
         int n = array.length;
 
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
                 if (array[j] > array[j + 1]) {
+
                 // Visualize Swap array[i] and array[j]
                 //***********************//
                     int temp = array[j];
                     array[j] = array[j + 1];
                     array[j + 1] = temp;
                     System.out.println("Swapped");
-                    Box.SwapBox(j, j+1, mainPanel);
-                    Thread.sleep(1500);  
+
+                    int[] status = new int[array.length];
+                    int m = 0;
+                    for(int k : statusArrays.get(statusArrays.size()-1)){
+                        status[m] = k;
+                        m++;
+                    }
+
+                    int temp2 = status[j];
+                    status[j] = status[j+1];
+                    status[j+1] = temp2;
+                    statusArrays.add(status);
+
+                    int[] action = {j, j+1};
+                    actionArray.add(action);
                 //***********************//    
                 }
             }

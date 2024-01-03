@@ -1,43 +1,16 @@
 package Algorithms;
 
 import java.awt.Color;
+import java.util.List;
 
 import javax.swing.SwingWorker;
 
 import NewPackage.Box;
 import NewPackage.MainPanel;
 
-public class SelectionSort extends SwingWorker<Void, Integer>{
+public class SelectionSort{
 
-    
-    MainPanel mainPanel;
-
-    public SelectionSort(MainPanel mainPanel) {
-        this.mainPanel = mainPanel;
-    }
-
-    @Override
-    protected Void doInBackground()throws InterruptedException{
-        int[] array = this.mainPanel.getRandomArray();
-        for(Box box : this.mainPanel.getBoxes()){
-            box.setColor(Color.BLUE);
-        }
-        this.selectionSort(array, this.mainPanel);
-        this.mainPanel.getBoxes().get(mainPanel.getBoxes().size()-1).setColor(Color.GREEN); 
-
-        return null;
-    }
-
-    @Override
-    protected void done() {
-            
-        //Enable setupPanel:
-        this.mainPanel.getMainFrame()
-        .setEnabledPanel(this.mainPanel.getMainFrame().getSetupPanel(), true);
-        this.mainPanel.setRunning(false);
-    }
-
-    public void selectionSort(int[] array, MainPanel mainPanel) throws InterruptedException {
+    public static void selectionSort(int[] array, MainPanel mainPanel, List<int[]> actionArray, List<int[]> statusArrays) {
         int n = array.length;
 
         // Traverse the array
@@ -55,16 +28,21 @@ public class SelectionSort extends SwingWorker<Void, Integer>{
             array[minIndex] = array[i];
             array[i] = temp;
 
-            System.out.println("Swapped");
-            Box.SwapBox(i, minIndex, mainPanel);
-            
-            if(i != minIndex) {
-                Thread.sleep(1500);
+            int[] status = new int[array.length];
+            int m = 0;
+            for(int k : statusArrays.get(statusArrays.size()-1)){
+                status[m] = k;
+                m++;
             }
-            else{
-                Thread.sleep(50);
-            } 
-            this.mainPanel.getBoxes().get(i).setColor(Color.GREEN);            
+    
+            int temp2 = status[minIndex];
+            status[minIndex] = status[i];
+            status[i] = temp2;
+    
+            statusArrays.add(status);
+            
+            int[] action = {minIndex, i};
+            actionArray.add(action);           
         }
     }
 }
