@@ -28,16 +28,20 @@ public class QuickSort{
                 array[i] = array[j];
                 array[j] = temp1;
 
-                int[] status = statusArrays.get(statusArrays.size()-1);
+                int[] status = new int[array.length];
+                int m = 0;
+                for(int k : statusArrays.get(statusArrays.size()-1)){
+                    status[m] = k;
+                    m++;
+                }
+
                 int temp2 = status[i];
                 status[i] = status[j];
                 status[j] = temp2;
                 statusArrays.add(status);
 
-                System.out.println("Swapped");
-
-                int[] tmp1 = {i, j};
-                actionArray.add(tmp1);
+                int[] action = {i, j, low, high};
+                actionArray.add(action);
                 //***********************//
             }
         }
@@ -48,18 +52,23 @@ public class QuickSort{
         array[i + 1] = array[high];
         array[high] = temp1;
 
-        int[] status = statusArrays.get(statusArrays.size()-1);
+        int[] status = new int[array.length];
+        int m = 0;
+        for(int k : statusArrays.get(statusArrays.size()-1)){
+            status[m] = k;
+            m++;
+        }
+
         int temp2 = status[i+1];
         status[i+1] = status[high];
         status[high] = temp2;
+
         statusArrays.add(status);
         
-        int[] tmp2 = {i+1, high};
-        actionArray.add(tmp2);
+        int[] action = {i+1, high, low, high};
+        actionArray.add(action);
         //***********************//
 
         return i + 1;   
     }
-
-
 }

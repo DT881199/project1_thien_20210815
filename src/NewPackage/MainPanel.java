@@ -21,6 +21,7 @@ public class MainPanel extends JPanel implements ActionListener{
     private JButton SortButton;
     private JButton ForwardButton;
     private JButton BackwardButton;
+    private JButton PauseButton;
 
     private Graphics g;
 
@@ -94,6 +95,7 @@ public class MainPanel extends JPanel implements ActionListener{
         this.boxes = boxes;
     }
 
+    //Set Buttons
     public void setSortButton(ICustomListener customListener) {
         if(this.SortButton != null){
             this.remove(this.SortButton);
@@ -104,25 +106,39 @@ public class MainPanel extends JPanel implements ActionListener{
         if(this.ForwardButton != null){
             this.remove(this.ForwardButton);
         }
+        if(this.PauseButton != null){
+            this.remove(this.PauseButton);
+        }
 
-        this.SortButton = new JButton("SORT | PAUSE");
+        this.SortButton = new JButton("SORT");
         this.SortButton.setBackground(Color.BLUE);
         this.SortButton.setForeground(Color.WHITE);
 
-        this.BackwardButton = new JButton("Backward");
-        this.ForwardButton  = new JButton("Forward");
+        this.BackwardButton = new JButton("<< Backward ");
+        this.ForwardButton  = new JButton("Forward >>");
 
-        this.SortButton.addActionListener(customListener);
+        this.PauseButton = new JButton("PAUSE");
+        this.PauseButton.setBackground(Color.RED);
+        this.PauseButton.setForeground(Color.WHITE);
+
         this.BackwardButton.addActionListener(customListener);
+        this.SortButton.addActionListener(customListener);
+        this.PauseButton.addActionListener(customListener);
         this.ForwardButton.addActionListener(customListener);
+
 
         this.add(this.BackwardButton);
         this.add(this.SortButton);
+        this.add(this.PauseButton);
         this.add(this.ForwardButton);
+
 
         this.SortButton.revalidate();
         this.BackwardButton.revalidate();
+        this.PauseButton.revalidate();
         this.ForwardButton.revalidate();
+
+
         this.repaint();
     }
 
@@ -169,6 +185,10 @@ public class MainPanel extends JPanel implements ActionListener{
 
     public JButton getBackwardButton() {
         return BackwardButton;
+    }
+
+    public JButton getPauseButton() {
+        return PauseButton;
     }
 
     public MainFrame getMainFrame() {

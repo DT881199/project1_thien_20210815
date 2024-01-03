@@ -6,7 +6,6 @@ import java.util.List;
 
 import Interfaces.ICustomListener;
 import NewPackage.MainPanel;
-import SortingAlgorithmsWorker.QuickSortWorker;
 import SortingAlgorithmsWorker.SelectionSortWorker;
 
     //Listening to SortButton
