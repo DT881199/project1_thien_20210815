@@ -7,8 +7,7 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
-import Algorithms.BubbleSort;
-import Algorithms.QuickSort;
+import Algorithms.SelectionSort;
 import Interfaces.ICustomListener;
 import NewPackage.Box;
 import NewPackage.MainPanel;
@@ -49,11 +48,14 @@ public class SelectionSortListener implements ICustomListener{
                 this.actionArrays = new ArrayList<int[]>();
                 this.index = -1;
                 this.statusArrays.add(mainPanel.getOriginArray());
-
                 this.mainPanel.getSortButton().setEnabled(false);
 
-                BubbleSort.bubbleSort(mainPanel.getRandomArray()
-                                    , mainPanel, actionArrays, statusArrays);
+                for(Box box : mainPanel.getBoxes()){
+                    box.setColor(Color.BLUE);
+                }
+
+                SelectionSort.selectionSort(mainPanel.getRandomArray()
+                                          , actionArrays, statusArrays);
 
                 this.mainPanel.getTimer().start();
             }
@@ -74,7 +76,8 @@ public class SelectionSortListener implements ICustomListener{
 
                         //Perform swapping
                         Box.SwapBox(actionArrays.get(index)[0], actionArrays.get(index)[1], mainPanel);
-                        
+
+                        mainPanel.getBoxes().get(actionArrays.get(index)[1]).setColor(Color.GREEN);;
                         if(actionArrays.get(index)[0] != actionArrays.get(index)[1]) {
                             Thread.sleep(1500);
                         }

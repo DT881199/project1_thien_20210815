@@ -2,11 +2,9 @@ package Algorithms;
 
 import java.util.List;
 
-import NewPackage.MainPanel;
-
 public class BubbleSort{
 
-    public static void bubbleSort(int[] array, MainPanel mainPanel, List<int[]> actionArray, List<int[]> statusArrays) {
+    public static void bubbleSort(int[] array, List<int[]> actionArray, List<int[]> statusArrays) {
         int n = array.length;
 
         for (int i = 0; i < n - 1; i++) {

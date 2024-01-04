@@ -1,16 +1,10 @@
 package Algorithms;
 
-import java.awt.Color;
 import java.util.List;
-
-import javax.swing.SwingWorker;
-
-import NewPackage.Box;
-import NewPackage.MainPanel;
 
 public class SelectionSort{
 
-    public static void selectionSort(int[] array, MainPanel mainPanel, List<int[]> actionArray, List<int[]> statusArrays) {
+    public static void selectionSort(int[] array, List<int[]> actionArray, List<int[]> statusArrays) {
         int n = array.length;
 
         // Traverse the array

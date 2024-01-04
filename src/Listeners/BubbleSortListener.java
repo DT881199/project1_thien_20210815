@@ -1,6 +1,5 @@
 package Listeners;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 import javax.swing.SwingWorker;
 
 import Algorithms.BubbleSort;
-import Algorithms.QuickSort;
 import Interfaces.ICustomListener;
 import NewPackage.Box;
 import NewPackage.MainPanel;
@@ -53,7 +51,7 @@ public class BubbleSortListener implements ICustomListener{
                 this.mainPanel.getSortButton().setEnabled(false);
 
                 BubbleSort.bubbleSort(mainPanel.getRandomArray()
-                                    , mainPanel, actionArrays, statusArrays);
+                                    , actionArrays, statusArrays);
 
                 this.mainPanel.getTimer().start();
             }
