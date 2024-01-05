@@ -57,7 +57,7 @@ public class Swap_Listener implements ActionListener{
                 this.box2.setColor(this.preColor2);
                 this.timer.removeActionListener(this);
             }
-        } 
+        }
 
         else{
             //Mid swapping

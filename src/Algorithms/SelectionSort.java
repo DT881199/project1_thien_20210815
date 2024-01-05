@@ -35,7 +35,7 @@ public class SelectionSort{
     
             statusArrays.add(status);
             
-            int[] action = {minIndex, i};
+            int[] action = {i, minIndex};
             actionArray.add(action);           
         }
     }

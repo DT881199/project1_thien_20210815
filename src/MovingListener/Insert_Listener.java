@@ -54,6 +54,7 @@ public class Insert_Listener implements ActionListener{
             //Finish inserting
             this.executionCount++;
             Box.move1Down(boxes.get(this.toPos), 20);
+            
             if(this.executionCount == 11){
                 //End inserting
                 boxes.get(toPos).setColor(Color.GREEN);
@@ -66,18 +67,10 @@ public class Insert_Listener implements ActionListener{
         //Dung lai o 6, chuyen sang Mid
         else{
             //Mid inserting
-            System.out.println("Inserting: " + this.boxes.get(toPos).getValue());
-            System.out.println("From: " + this.fromPos);
-            System.out.println("To: " + this.toPos);
-            System.out.println("Speed1: " + this.speed1);
-            System.out.println("Speed2: " + this.speed2);
-            System.out.println("done");
-
             Box.move1Left(boxes.get(toPos), (int)Math.ceil(this.speed2));
             for(int i = fromPos; i > toPos; i--){
                 Box.move1Right(boxes.get(i), (int)Math.ceil(this.speed1));
             }
-
             if(boxes.get(toPos+1).getX() >= this.prePos[1]){
                 for(int i = toPos; i <= fromPos; i++){
                     boxes.get(i).setX(this.prePos[i-toPos]);

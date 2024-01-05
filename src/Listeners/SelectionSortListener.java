@@ -39,11 +39,13 @@ public class SelectionSortListener implements ICustomListener{
             .setEnabledPanel(this.mainPanel.getMainFrame().getSetupPanel(), false);
             this.mainPanel.getBackwardButton().setEnabled(false);
             this.mainPanel.getForwardButton().setEnabled(false);
+            this.mainPanel.getPauseButton().setEnabled(true);
 
             this.mainPanel.setRunning(true);
 
-            //Chay timer va worker khi running = false
+            //Run Timer and Worker when running = false
             if(e.getSource().equals(mainPanel.getSortButton())){
+                //Initiate
                 this.statusArrays = new ArrayList<int[]>();
                 this.actionArrays = new ArrayList<int[]>();
                 this.index = -1;
@@ -77,13 +79,13 @@ public class SelectionSortListener implements ICustomListener{
                         //Perform swapping
                         Box.SwapBox(actionArrays.get(index)[0], actionArrays.get(index)[1], mainPanel);
 
-                        mainPanel.getBoxes().get(actionArrays.get(index)[1]).setColor(Color.GREEN);;
                         if(actionArrays.get(index)[0] != actionArrays.get(index)[1]) {
                             Thread.sleep(1500);
                         }
                         else{
                             Thread.sleep(50);
                         }
+                        mainPanel.getBoxes().get(actionArrays.get(index)[0]).setColor(Color.GREEN);
                     }
                     return null;
                 }
@@ -92,6 +94,7 @@ public class SelectionSortListener implements ICustomListener{
                     //Enable setupPanel if finished:
                     mainPanel.setRunning(false);
                     if(index >= actionArrays.size()-1){
+                        mainPanel.getBoxes().get(statusArrays.size()-1).setColor(Color.GREEN);
                         mainPanel.getMainFrame()
                             .setEnabledPanel(mainPanel.getMainFrame().getSetupPanel(), true);
                         mainPanel.getBackwardButton().setEnabled(true);

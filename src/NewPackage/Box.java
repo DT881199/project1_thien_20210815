@@ -47,7 +47,7 @@ public class Box {
         });
     }
 
-    //Insert fromPos --> toPos, move those in middle
+    //Insert fromPos --> toPos, move those in middle 
     public static void InsertBox(int fromPos, int toPos, MainPanel mainPanel) {
         
         //All changes on Box List, timer and UI must be made on EDT

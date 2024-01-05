@@ -132,12 +132,14 @@ public class MainPanel extends JPanel implements ActionListener{
         this.add(this.PauseButton);
         this.add(this.ForwardButton);
 
+        this.BackwardButton.setEnabled(false);
+        this.ForwardButton.setEnabled(false);
+        this.PauseButton.setEnabled(false);
 
         this.SortButton.revalidate();
         this.BackwardButton.revalidate();
         this.PauseButton.revalidate();
         this.ForwardButton.revalidate();
-
 
         this.repaint();
     }

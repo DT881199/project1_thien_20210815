@@ -38,11 +38,13 @@ public class BubbleSortListener implements ICustomListener{
             .setEnabledPanel(this.mainPanel.getMainFrame().getSetupPanel(), false);
             this.mainPanel.getBackwardButton().setEnabled(false);
             this.mainPanel.getForwardButton().setEnabled(false);
+            this.mainPanel.getPauseButton().setEnabled(true);
 
             this.mainPanel.setRunning(true);
 
-            //Chay timer va worker khi running = false
+            //Run Timer and Worker when running = false
             if(e.getSource().equals(mainPanel.getSortButton())){
+                //Initiate
                 this.statusArrays = new ArrayList<int[]>();
                 this.actionArrays = new ArrayList<int[]>();
                 this.index = -1;

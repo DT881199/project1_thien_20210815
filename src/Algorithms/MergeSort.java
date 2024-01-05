@@ -1,61 +1,30 @@
 package Algorithms;
-import java.awt.Color;
 
-import javax.swing.SwingWorker;
+import java.util.List;
 
 import NewPackage.Box;
-import NewPackage.MainPanel;
 
-public class MergeSort extends SwingWorker<Void, Integer> {
-    
-    MainPanel mainPanel;
-    Box[] boxArray;
+public class MergeSort{
 
-    public MergeSort(MainPanel mainPanel) {
-        this.mainPanel = mainPanel;
-        this.boxArray = mainPanel.getBoxes().toArray(new Box[0]);
-    }
-
-    @Override
-    protected Void doInBackground() throws InterruptedException{
-        int[] array = this.mainPanel.getRandomArray();
-        System.out.println("merging");
-        this.mergeSort(array, 0, array.length - 1, mainPanel);
-        
-        return null;
-    }
-
-    @Override
-    protected void done() {
-            
-        //Enable setupPanel:
-        this.mainPanel.getMainFrame()
-        .setEnabledPanel(this.mainPanel.getMainFrame().getSetupPanel(), true);
-        this.mainPanel.setRunning(false);
-    }
-    
     // Merge sort function
-    public void mergeSort(int[] arr, int left, int right, MainPanel mainPanel) throws InterruptedException {
+    public static void mergeSort(int[] arr, int left, int right, List<int[]> actionArray, List<int[]> statusArray){
         if (left < right) {
             // Find the middle point
             int middle = (left + right) / 2;
             System.out.println("still merging");
 
             // Recursively sort the first and second halves
-            mergeSort(arr, left, middle, mainPanel);
-            mergeSort(arr, middle + 1, right, mainPanel);
+            mergeSort(arr, left, middle, actionArray, statusArray);
+            mergeSort(arr, middle + 1, right, actionArray, statusArray);
 
             // Merge the sorted halves
-            merge(arr, left, middle, right, mainPanel);
+            merge(arr, left, middle, right, actionArray, statusArray);
         }
     }
 
-    // Merge two subarrays of arr[] and boxArray[]
-    public void merge(int[] arr, int left, int middle, int right, MainPanel mainPanel) throws InterruptedException {
+    // Merge two subarrays of arr[]
+    public static void merge(int[] arr, int left, int middle, int right, List<int[]> actionArray, List<int[]> statusArrays){
         // Find sizes of two subarrays to be merged
-        System.out.println("merging value:" + left + " and " + right + " by " + middle);
-        System.out.println("merging value:" + mainPanel.getBoxes().get(left).getValue() + " and " + mainPanel.getBoxes().get(right).getValue() );
-        
         int n1 = middle - left + 1;
         int n2 = right - middle;
 
@@ -63,19 +32,25 @@ public class MergeSort extends SwingWorker<Void, Integer> {
         int[] leftArray = new int[n1];
         int[] rightArray = new int[n2];
 
-        Box[] leftBoxArray = new Box[n1];
-        Box[] rightboxArray = new Box[n2];
+        int[] status = new int[arr.length];
+
+        int[] leftStatusArray = new int[n1];
+        int[] righStatustArray = new int[n2];
+
+        int m = 0;
+        for(int k : statusArrays.get(statusArrays.size()-1)){
+            status[m] = k;
+            m++;
+        }
 
         // Copy data to temporary arrays
         for (int i = 0; i < n1; ++i) {
             leftArray[i] = arr[left + i];
-            leftBoxArray[i] = boxArray[left + i];
-            leftBoxArray[i].setColor(Color.BLUE);
+            leftStatusArray[i] = status[left + i];
         }
         for (int j = 0; j < n2; ++j) {
             rightArray[j] = arr[middle + 1 + j];
-            rightboxArray[j] = boxArray[middle + 1 + j];
-            rightboxArray[j].setColor(Color.YELLOW);
+            righStatustArray[j] = status[middle + 1 + j];
         }
 
         System.out.println("entered 2");
@@ -90,12 +65,12 @@ public class MergeSort extends SwingWorker<Void, Integer> {
             if (leftArray[i] <= rightArray[j]) {
                 arr[k] = leftArray[i];
                 System.out.println("entered left");
-                boxArray[k] = leftBoxArray[i];
+                status[k] = leftStatusArray[i];
                 i++;
             } else {
                 System.out.println("entered right");
                 arr[k] = rightArray[j];
-                boxArray[k] = rightboxArray[j];
+                status[k] = righStatustArray[j];
                 j++;
             }
             k++;
@@ -104,7 +79,7 @@ public class MergeSort extends SwingWorker<Void, Integer> {
         // Copy remaining elements of leftArray[], if there are any
         while (i < n1) {
             arr[k] = leftArray[i];
-            boxArray[k] = leftBoxArray[i];
+            status[k] = leftStatusArray[i];
             i++;
             k++;
         }
@@ -112,15 +87,14 @@ public class MergeSort extends SwingWorker<Void, Integer> {
         // Copy remaining elements of rightArray[], if there are any
         while (j < n2) {
             arr[k] = rightArray[j];
-            boxArray[k] = rightboxArray[j];
+            status[k] = righStatustArray[j];
             j++;
             k++;
-        }
+        } 
 
-        Box.MergeBoxes(boxArray, left, right, mainPanel);
-        Thread.sleep((right-left+1)*650 + 500);
-        for (int m = left; m <= right; m++) {
-            boxArray[m].setColor(Color.GREEN);
-        }
+        statusArrays.add(status);
+
+        int[] action = {left, right, middle};
+        actionArray.add(action);
     }
 }
