@@ -2,21 +2,20 @@ package Algorithms;
 
 import java.util.List;
 
-import NewPackage.Box;
-
 public class InsertionSort{
 
     public static void insertionSort(int[] array, List<int[]> actionArray, List<int[]> statusArrays){
         int n = array.length;
 
-        int[] status = new int[n];
-        int m = 0;
-        for(int k : statusArrays.get(statusArrays.size()-1)){
-            status[m] = k;
-            m++;
-        }
-
         for (int i = 1; i < n; ++i) {
+            
+            int[] status = new int[n];
+            int m = 0;
+            for(int k : statusArrays.get(statusArrays.size()-1)){
+                status[m] = k;
+                m++;
+            }
+            
             int key = array[i];
             int keyBox = status[i];
             int j = i - 1;
@@ -34,8 +33,6 @@ public class InsertionSort{
 
             int[] action = {i, j+1};
             actionArray.add(action);
-
-            //Move key to j+1, from j+2 to i need to move(inclusive)
         }
     }
 }

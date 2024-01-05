@@ -2,8 +2,6 @@ package Algorithms;
 
 import java.util.List;
 
-import NewPackage.Box;
-
 public class MergeSort{
 
     // Merge sort function

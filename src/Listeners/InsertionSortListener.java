@@ -54,7 +54,15 @@ public class InsertionSortListener implements ICustomListener{
 
                 InsertionSort.insertionSort(mainPanel.getRandomArray()
                                     , actionArrays, statusArrays);
-
+                
+                int k = 0;
+                for(int[] status : statusArrays){
+                    System.out.println("Step "+ k + ": ");
+                    for(int i : status){
+                        System.out.print(i+" ");
+                    }
+                    System.out.println(" ");
+                }
                 this.mainPanel.getTimer().start();
             }
 
