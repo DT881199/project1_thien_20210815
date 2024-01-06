@@ -100,6 +100,7 @@ public class InsertionSortListener implements ICustomListener{
                         mainPanel.getMainFrame()
                             .setEnabledPanel(mainPanel.getMainFrame().getSetupPanel(), true);
                         mainPanel.getBackwardButton().setEnabled(true);
+                        mainPanel.getSortButton().setEnabled(true);
                     }
                     else{
                         mainPanel.getBackwardButton().setEnabled(true);

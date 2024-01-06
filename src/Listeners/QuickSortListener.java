@@ -106,6 +106,7 @@ public class QuickSortListener implements ICustomListener{
                         mainPanel.getMainFrame()
                             .setEnabledPanel(mainPanel.getMainFrame().getSetupPanel(), true);
                         mainPanel.getBackwardButton().setEnabled(true);
+                        mainPanel.getSortButton().setEnabled(true);
                         for(Box box : mainPanel.getBoxes()){
                             box.setColor(Color.GREEN);
                         }

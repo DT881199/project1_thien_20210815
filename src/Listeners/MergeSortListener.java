@@ -107,7 +107,7 @@ public class MergeSortListener implements ICustomListener{
                         //Perform swapping
                         Box.MergeBoxes(boxArray, left, right, mainPanel); 
                         
-                        Thread.sleep((actionArrays.get(index)[1]-actionArrays.get(index)[0]+1)*650 + 500);
+                        Thread.sleep((right-left+1)*650 + 500);
 
                         //Reset color
                         for (int j = left; j <= right; j++) {
@@ -124,6 +124,7 @@ public class MergeSortListener implements ICustomListener{
                         mainPanel.getMainFrame()
                             .setEnabledPanel(mainPanel.getMainFrame().getSetupPanel(), true);
                         mainPanel.getBackwardButton().setEnabled(true);
+                        mainPanel.getSortButton().setEnabled(true);
                     }
                     else{
                         mainPanel.getBackwardButton().setEnabled(true);
