@@ -22,12 +22,13 @@ public class MainFrame extends JFrame {
 
         MainPanel mainPanel = new MainPanel(this);
         setupPanel = new SetupPanel(mainPanel);
+        setupPanel.setBackground(Color.WHITE);
 
         JPanel borderSetupPanel = new JPanel(new BorderLayout());
-        borderSetupPanel.setPreferredSize(new Dimension(710, 120));
-        Border setupBorder = BorderFactory.createMatteBorder(3, 3, 3, 3, Color.PINK);
-        borderSetupPanel.setBorder(BorderFactory.createCompoundBorder(setupBorder,
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        borderSetupPanel.setPreferredSize(new Dimension(750, 130));
+        Border outerSetupBorder = BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLUE);
+        Border innerSetupBorder = BorderFactory.createMatteBorder(10, 10,10, 10, Color.CYAN);
+        borderSetupPanel.setBorder(BorderFactory.createCompoundBorder(outerSetupBorder,innerSetupBorder));
         borderSetupPanel.add(setupPanel);
 
         JPanel outerSetupPanel = new JPanel(new FlowLayout());
@@ -39,18 +40,18 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-        public void setEnabledPanel(Container container, boolean enabled) {
-            container.setEnabled(enabled);
+    public void setEnabledPanel(Container container, boolean enabled) {
+        container.setEnabled(enabled);
 
-            Component[] components = container.getComponents();
-            for (Component component : components) {
-                if (component instanceof Container) {
-                    setEnabledPanel((Container) component, enabled);
-                } else {
-                    component.setEnabled(enabled);
-                }
+        Component[] components = container.getComponents();
+        for (Component component : components) {
+            if (component instanceof Container) {
+                setEnabledPanel((Container) component, enabled);
+            } else {
+                component.setEnabled(enabled);
             }
         }
+    }
 
     public SetupPanel getSetupPanel() {
         return setupPanel;

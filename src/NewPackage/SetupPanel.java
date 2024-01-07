@@ -2,6 +2,7 @@ package NewPackage;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.text.NumberFormatter;
 
 import OptionListener.OptionListener;
@@ -34,10 +35,14 @@ public class SetupPanel extends JPanel{
         firstField.setFont(font); lastField.setFont(font); numberField.setFont(font); 
 
         //Submit button
-        submitButton = new JButton("Submit");
+        submitButton = new JButton("SUBMIT");
+        font = new Font("Arial",Font.BOLD, 16);
+        submitButton.setFont(font);
+        submitButton.setForeground(Color.WHITE);
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try{
                     // Get input va tao array
                     int first = (int) firstField.getValue();
                     int last = (int) lastField.getValue();
@@ -48,7 +53,10 @@ public class SetupPanel extends JPanel{
 
                     // Set Timer trong mainPanel
                     mainPanel.setTimer(new Timer(50,mainPanel));
-                    
+                }
+                catch (Exception exception){
+                    JOptionPane.showMessageDialog(mainPanel, "Invalid input!");
+                }
 
             }
         });
@@ -60,26 +68,42 @@ public class SetupPanel extends JPanel{
         optionsBox = new JComboBox<>(options);
         optionsBox.setFont(font);
         optionsBox.addActionListener(new OptionListener(mainPanel));
+        optionsBox.setPreferredSize(new Dimension(200, 45));
 
-        this.setLayout(new GridLayout(3, 3)); // 3 rows, 3 columns
-        
+        this.setLayout(new GridLayout(1, 3)); // 2 rows, 3 columns
+
+        JPanel innerPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER,0,5));
+        JPanel innerPanel2 = new JPanel(new GridLayout(3, 1));
+        JPanel innerPanel3 = new JPanel(new GridLayout(3, 1));
+        innerPanel1.setBackground(Color.CYAN);
+        innerPanel2.setBackground(Color.CYAN);
+        innerPanel3.setBackground(Color.CYAN);
+
+        Border emptyBorder = BorderFactory.createMatteBorder(5, 5, 5, 5, Color.WHITE);
+        Border outerBorder = BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLUE);
+        submitButton.setBorder(BorderFactory.createCompoundBorder(outerBorder, emptyBorder));
+        submitButton.setBackground(Color.BLUE);
+        submitButton.setPreferredSize(new Dimension(90, 45));
+        innerPanel1.add(optionsBox);
+        innerPanel1.add(submitButton);
+
         JLabel label = new JLabel("First number:");
         label.setFont(font);
-        this.add(label);
-        this.add(firstField);
-        this.add(optionsBox);
-
-        JPanel innerPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER,0,4));
+        innerPanel2.add(label);
         label = new JLabel("Second number:");
         label.setFont(font);
-        this.add(label);
-        this.add(lastField);
-        innerPanel2.add(submitButton);
-        this.add(innerPanel2);
-        
+        innerPanel2.add(label);
         label = new JLabel("Amount:");
         label.setFont(font);
-        this.add(label);
-        this.add(numberField);
+        innerPanel2.add(label);
+
+        innerPanel3.add(firstField);
+        innerPanel3.add(lastField); 
+        innerPanel3.add(numberField);
+
+        this.add(innerPanel2);
+        this.add(innerPanel3);
+        this.add(innerPanel1);
+
     }
 }

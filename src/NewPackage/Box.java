@@ -120,7 +120,7 @@ public class Box {
 
         Font font = new Font("Arial", Font.BOLD, 20);
         g.setFont(font);g.setColor(Color.BLACK);
-        g.drawString(this.getValue(), this.getX()+17, this.getY()+40);
+        g.drawString(this.getValue(), this.getX()+(int)(Box.distance/1.75), this.getY()+(int)(Box.distance*1.5));
     }
 
     public void setX(int x) {
