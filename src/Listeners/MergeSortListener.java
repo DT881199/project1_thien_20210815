@@ -8,8 +8,8 @@ import java.util.List;
 import javax.swing.SwingWorker;
 import Algorithms.MergeSort;
 import Interfaces.ICustomListener;
-import NewPackage.Box;
-import NewPackage.MainPanel;
+import Main.Box;
+import Main.MainPanel;
 
 
     //Listening to SortButton

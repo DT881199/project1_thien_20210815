@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import NewPackage.Box;
+import Main.Box;
 
 public class Swap_Listener implements ActionListener{
 

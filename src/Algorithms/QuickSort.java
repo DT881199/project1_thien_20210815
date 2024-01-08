@@ -58,11 +58,9 @@ public class QuickSort{
             status[m] = k;
             m++;
         }
-
         int temp2 = status[i+1];
         status[i+1] = status[high];
         status[high] = temp2;
-
         statusArrays.add(status);
         
         int[] action = {i+1, high, low, high};

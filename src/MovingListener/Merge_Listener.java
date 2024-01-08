@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.swing.Timer;
 
-import NewPackage.Box;
+import Main.Box;
 
 public class Merge_Listener implements ActionListener{
 

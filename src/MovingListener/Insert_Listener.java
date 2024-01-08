@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.Timer;
 
-import NewPackage.Box;
+import Main.Box;
 
 public class Insert_Listener implements ActionListener{
 

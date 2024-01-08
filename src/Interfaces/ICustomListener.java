@@ -2,7 +2,7 @@ package Interfaces;
 
 import java.awt.event.ActionListener;
 
-import NewPackage.MainPanel;
+import Main.MainPanel;
 
 public interface ICustomListener extends ActionListener{
     

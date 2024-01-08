@@ -10,7 +10,7 @@ import Listeners.InsertionSortListener;
 import Listeners.MergeSortListener;
 import Listeners.QuickSortListener;
 import Listeners.SelectionSortListener;
-import NewPackage.MainPanel;
+import Main.MainPanel;
 
 public class OptionListener implements ICustomListener{
     private MainPanel mainPanel;

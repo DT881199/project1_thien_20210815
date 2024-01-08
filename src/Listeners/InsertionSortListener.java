@@ -8,8 +8,8 @@ import javax.swing.SwingWorker;
 
 import Algorithms.InsertionSort;
 import Interfaces.ICustomListener;
-import NewPackage.Box;
-import NewPackage.MainPanel;
+import Main.Box;
+import Main.MainPanel;
 
 
     //Listening to SortButton
@@ -76,7 +76,6 @@ public class InsertionSortListener implements ICustomListener{
                 protected Void doInBackground() throws InterruptedException{
                     while(mainPanel.getRunning() && index < actionArrays.size()-1){
                         index++;
-
                         System.out.println("Now at: " + index);
                         System.out.println("Action at: " + actionArrays.get(index)[0] + " and " + actionArrays.get(index)[1]);
 
